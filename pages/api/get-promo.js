@@ -1,5 +1,5 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet'
-import credentials  from '../../credentials.json'
+
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_DOC_ID)
 export default async(req,res)=>{

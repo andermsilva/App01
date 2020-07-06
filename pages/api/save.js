@@ -1,9 +1,5 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet'
 import moment from 'moment'
-import credentials  from '../../credentials.json'
-
-
-
 const doc = new GoogleSpreadsheet(process.env.SHEET_DOC_ID)
 const genCupom=()=>{
       
