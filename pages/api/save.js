@@ -16,7 +16,9 @@ export default async(req,res)=>{
         })
         await doc.loadInfo()
         const sheet = doc.sheetsByIndex[1]
+
         const data =JSON.parse(req.body)
+
         const sheetConfig = doc.sheetsByIndex[2]
         await sheetConfig.loadCells('A3:B3')
 
@@ -32,14 +34,16 @@ export default async(req,res)=>{
         }
        
          //Nome	Email	Whatsapp	Cupom	Promo
+        
          await sheet.addRow({
               Nome: data.Nome,
               Email: data.Email,
               Whatsapp: data.Whatsapp,
-              Nata: parseInt(data.Nota),
+              Nota: parseInt(data.Nota),
               'Data Preenchimento': moment().format('DD/MM/YYYY, h:mm:ss a'),
               Cupom,
-              Promo
+              Promo,
+             
              
          })
          res.end(JSON.stringify({
@@ -47,8 +51,7 @@ export default async(req,res)=>{
              Cupom,
              Promo
          }))
-         
-        
+     
    }catch(err){
 
        // console.log(err)
