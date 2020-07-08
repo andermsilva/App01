@@ -2,8 +2,7 @@ import React,{useState} from 'react'
 
 import PageTitle from '../components/PageTitle'
 const Pesquisa =()=>{
-    
-
+   const cor ='bg-red-200'
     const [ form ,setForm ]=useState({
         Nome:'',
         Email: '',
@@ -11,36 +10,60 @@ const Pesquisa =()=>{
         Nota:0
 
     })
+     
+    
     const notas=[0,1,2,3,4,5]
     const [sucess,setSucess]= useState(false)
     const [retorno, setRetorno]= useState({})
+   //validar dados!!
     const save = async ()=>{
+
+      const string = form.Whatsapp
+       
+     const  msm =''
         
-        try{
-        const response = await fetch('/api/save',{
-                method: 'POST',
-                body: JSON.stringify(form)
-            })
-            const data = await response.json()
+      if(isNaN(form.Whatsapp)){
 
-            setSucess(true)
-            setRetorno(data)
-            
-        }catch(err){
+        form.Whatsapp = string.replace(/\D+/g ,'')
+      }
 
+     
+
+        
+        if(form.Nome !=='' && form.Email!=='' && form.Whatsapp !==''){
+                try{
+                const response = await fetch('/api/save',{
+                        method: 'POST',
+                        body: JSON.stringify(form)
+                    })
+                    const data = await response.json()
+
+                    setSucess(true)
+                    setRetorno(data)
+                    
+                }catch(err){
+
+                }
+           
+
+        }  else{
+                alert('Preencha todos os campos')
+                
         }
     }
 
    const onChange = evt =>{
        const value= evt.target.value
        const key = evt.target.name
+        
        setForm(old=>({
             ...old,
             [key] :value
        }))
-     
+       
    }
     return(
+
         <div className='pt-6'>
             <PageTitle title='Pesquisa'/>
             <h1 className='text-center font-bold my-4 text-2xl'> Criticas e sugestões</h1>
@@ -52,7 +75,7 @@ const Pesquisa =()=>{
             {!sucess &&
             <div className='w-1/5 mx-auto'>
                 <label className='font-bold'>Seu Nome:</label>
-                <input className='p-4 block bg-blue-100 shadow rounded-lg my-2' type='text' placeholder='Nome' name='Nome' 
+                <input className='p-4 block  bg-blue-100  shadow rounded-lg my-2' type='text' placeholder='Nome' name='Nome' 
                        onChange={onChange} value={form.Nome}/>
 
                 <label className='font-bold'>E-mail:</label>
@@ -76,6 +99,12 @@ const Pesquisa =()=>{
                     
                 }
                 </div>
+                <pre>{
+                    
+                    
+                       // JSON.stringify(form,null,2) 
+                       // retorno.Nome
+                }</pre>
                 <button onClick={save} className='bg-blue-400 px-12 py-4 font-bold rounded-lg shadow-lg hover:shadow  my-2'> Enviar</button>
             </div>
             }
@@ -99,7 +128,7 @@ const Pesquisa =()=>{
                        
                     </div>
                 }
-              
+               
                </div>}
 
         </div>
